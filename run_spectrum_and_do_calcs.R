@@ -4,9 +4,11 @@ library(igraph)
 
 ## RNA-seq
 
-r <- Spectrum(thyroid[[1]])
+r <- Spectrum(bladder[[1]])
 
-clinicali <- thyroid[[2]]
+# do log-rank
+
+clinicali <- bladder[[2]]
 clinicali$Death <- as.numeric(as.character(clinicali$Death))
 coxFit <- coxph(Surv(time = Time, event = Death) ~ as.factor(r$assignments), data = clinicali, ties = "exact")
 coxresults <- summary(coxFit)
@@ -14,9 +16,11 @@ print(coxresults$logtest[3])
 
 ## multi-omics
 
-r <- Spectrum(thyroid)
+r <- Spectrum(bladder)
 
-clinicali <- clinical_thyroid
+# do log-rank
+
+clinicali <- clinical_bladder
 clinicali$Death <- as.numeric(as.character(clinicali$Death))
 coxFit <- coxph(Surv(time = Time, event = Death) ~ as.factor(r$assignments), data = clinicali, ties = "exact")
 coxresults <- summary(coxFit)
@@ -25,13 +29,21 @@ print(coxresults$logtest[3])
 ## single cell RNA-seq
 
 # smaller datasets
+
 r <- Spectrum(darmanis[[1]])
+
+# get NMI
+
 NMIi <- compare(as.numeric(r$assignments),
                 as.numeric(as.factor(darmanis[[2]])),method='nmi') # diff lengths atm
 print(NMIi)
 
 # bigger datasets
+
 r <- Spectrum(darmanis[[1]],FASP=TRUE,FASPk=900)
+
+# get NMI
+
 NMIi <- compare(as.numeric(r$assignments),
                 as.numeric(as.factor(darmanis[[2]])),method='nmi') # diff lengths atm
 print(NMIi)
