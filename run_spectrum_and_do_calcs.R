@@ -2,7 +2,7 @@ library(Spectrum)
 library(survival)
 library(igraph)
 
-## RNA-seq
+## Spectrum: RNA-seq
 
 r <- Spectrum(bladder[[1]])
 
@@ -14,7 +14,7 @@ coxFit <- coxph(Surv(time = Time, event = Death) ~ as.factor(r$assignments), dat
 coxresults <- summary(coxFit)
 print(coxresults$logtest[3])
 
-## multi-omics
+## Spectrum: multi-omics
 
 r <- Spectrum(bladder)
 
@@ -26,7 +26,7 @@ coxFit <- coxph(Surv(time = Time, event = Death) ~ as.factor(r$assignments), dat
 coxresults <- summary(coxFit)
 print(coxresults$logtest[3])
 
-## single cell RNA-seq
+## Spectrum: single cell RNA-seq
 
 # smaller datasets
 
